@@ -26,8 +26,9 @@ namespace jwt_sample.Controllers
         {
             if(string.IsNullOrEmpty(model.Username)==false && string.IsNullOrEmpty(model.Password) == false)
             {
-               string tokenStr = GenerateToken(model);
-                return Ok(tokenStr);
+                string tokenStr = GenerateToken(model);
+                
+                return Ok(new { Token = tokenStr, ExpiresIn = 7 });
             }
 
             return Unauthorized();

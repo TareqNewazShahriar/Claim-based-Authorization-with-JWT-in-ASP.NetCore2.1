@@ -40,11 +40,11 @@ namespace Jwt_Web_Client_Sample.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string val=null)
         {
-            var token = await PostAsync("account/GetAuthenticated", new UserModel() { Username = "a", Password = "a", Email = "asdf@sdf", Dob = DateTime.Parse("2010/01/01") });
-            if (string.IsNullOrEmpty(token) == false)
+            var tokenObj = await PostAsync<TokenModel, UserModel>("account/GetAuthenticated", new UserModel() { Username = "a", Password = "a", Email = "asdf@sdf", Dob = DateTime.Parse("2010/01/01") });
+            if (string.IsNullOrEmpty(tokenObj.Token) == false)
             {
-                Response.Cookies.Append("token", token);
-                HttpContext.Session.SetString(AppData.TokenName, token);
+                Response.Cookies.Append("token", tokenObj.Token, new CookieOptions { Expires = DateTime.UtcNow.AddDays(tokenObj.ExpiresIn) });
+                HttpContext.Session.SetString(AppData.TokenName, tokenObj.Token);
 
                 var claims = new List<Claim>
                 {
@@ -93,7 +93,7 @@ namespace Jwt_Web_Client_Sample.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            HttpContext.Session.SetString(AppData.TokenName, string.Empty);
+            Response.Cookies.Delete(AppData.TokenName);
 
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             // await HttpContext.SignOutAsync("Identity.External");

@@ -16,24 +16,29 @@ namespace Jwt_Web_Client_Sample.Controllers
         HttpClient _client = new HttpClient(); //HttpClientFactory.Create();
         private static MediaTypeWithQualityHeaderValue _mediaType = new MediaTypeWithQualityHeaderValue("application/json");
 
-        public async Task<string> GetAsync<TEntity>(string url) where TEntity : class
+        public async Task<TEntity> GetAsync<TEntity>(string url) where TEntity : class
         {
             var requestUrl = $"{AppData.ApiUrl}/{url}";
 
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(_mediaType);
 
-            string token = HttpContext.Session.GetString(AppData.TokenName);
-            if (string.IsNullOrEmpty(token) == false)
-                _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+            if (Request.Cookies.ContainsKey(AppData.TokenName))
+                _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Request.Cookies[AppData.TokenName]}");
 
             var response = await _client.GetAsync(requestUrl);
 
-            string result = await response.Content.ReadAsStringAsync();
+            TEntity result;
+
+            if(typeof(TEntity) == typeof(string))
+                result = (TEntity) await response.Content.ReadAsStringAsync();
+            else
+                result = JsonConvert.DeserializeObject<TEntity>(await response.Content.ReadAsStringAsync());
+
             return result;
         }
 
-        public async Task<string> PostAsync<TEntity>(string url, TEntity model, string email = null) where TEntity : class
+        public async Task<TRESPONSE> PostAsync<TRESPONSE, TREQUEST>(string url, TREQUEST model, string email = null) where TREQUEST : class
         {
             var requestUrl = $"{AppData.ApiUrl}/{url}";
 
@@ -51,7 +56,7 @@ namespace Jwt_Web_Client_Sample.Controllers
             var contentData = new StringContent(stringData, Encoding.UTF8, _mediaType.MediaType);
 
             var response = await _client.PostAsync(requestUrl, contentData);
-            string result = await response.Content.ReadAsStringAsync();
+            TRESPONSE result = JsonConvert.DeserializeObject<TRESPONSE>(await response.Content.ReadAsStringAsync());
 
             return result;
         }
