@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jwt_Web_Client_Sample", "Jwt_Web_Client_Sample\Jwt_Web_Client_Sample.csproj", "{CC8491D2-F63C-40F7-9788-168E23B5CE2B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC8491D2-F63C-40F7-9788-168E23B5CE2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC8491D2-F63C-40F7-9788-168E23B5CE2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC8491D2-F63C-40F7-9788-168E23B5CE2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC8491D2-F63C-40F7-9788-168E23B5CE2B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0ACE0E72-5AF1-4813-96B8-485F4BB7C3BE}
+	EndGlobalSection
+EndGlobal

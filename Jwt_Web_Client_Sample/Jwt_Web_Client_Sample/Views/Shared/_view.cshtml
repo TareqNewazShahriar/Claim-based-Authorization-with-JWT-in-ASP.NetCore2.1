@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Http;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Jwt</title>
+    <style>
+        body { font-size: 1.2em; }
+    </style>
+    <script src="@Url.Content("~/js/JavaScript.js")"></script>
+</head>
+<body>
+    <a href="/">index</a> [ <a href="#" onclick="ajax('home/index')">js</a> ] |
+    <a href="/home/authorized">authorized</a> [ <a href="#" onclick="ajax('home/AllUsers')">js</a> ] |
+    <a href="/home/protected">Protected (dob only)</a> [ <a href="#" onclick="ajax('home/policyonly')">js</a> ] |
+    <a href="/account/login">login</a> [<a href="#" onclick="login()">js</a>] |
+    <a href="/account/externallogin?provider=Facebook&ReturnUrl=/">External (facebook)</a> |
+    <a href="/account/externallogin?provider=Google&ReturnUrl=/">External (google)</a> |
+    <a href="/account/externallogin?provider=Twitter&ReturnUrl=/">External (twitter)</a> |
+    <a href="/account/logout">logout</a>
+    <strong>
+        [ logged-in: @ViewContext.HttpContext.User.Identity.IsAuthenticated ]
+        [ Api token: @(string.IsNullOrEmpty(ViewContext.HttpContext.Session.GetString(Jwt_Web_Client_Sample.AppData.TokenName)) ? "empty" : "present") ]
+    </strong>
+    <hr />
+    <div>
+        @Html.Raw(@ViewBag.data)
+    </div>
+
+    <hr />
+    <pre id="log" style="background-color:black; color: silver; min-height: 100px; width:500px;"></pre>
+</body>
+</html>
