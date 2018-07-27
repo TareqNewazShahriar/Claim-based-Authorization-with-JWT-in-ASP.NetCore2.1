@@ -51,7 +51,7 @@ namespace jwt_sample.Controllers
             var tokenObj = new JwtSecurityToken(_config["Jwt:Issuer"],
               _config["Jwt:Issuer"],
               claims,
-              expires: DateTime.UtcNow.AddDays(AppData.ExpiresIn),
+              expires: DateTime.UtcNow.AddMinutes(AppData.ExpiresIn),
               signingCredentials: creds);
 
             var tokenStr = new JwtSecurityTokenHandler().WriteToken(tokenObj);

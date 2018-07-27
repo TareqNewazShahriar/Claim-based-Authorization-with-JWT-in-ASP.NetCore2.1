@@ -27,7 +27,12 @@ namespace Jwt_Web_Client_Sample.Controllers
                 _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Request.Cookies[AppData.TokenName]}");
 
             var response = await _client.GetAsync(requestUrl);
-            
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                Response.Redirect(AppData.LoginPath);
+                return default(TEntity); // null
+            }
+
             object obj = null;
             if(typeof(TEntity) == typeof(string))
                 obj = (object) await response.Content.ReadAsStringAsync();

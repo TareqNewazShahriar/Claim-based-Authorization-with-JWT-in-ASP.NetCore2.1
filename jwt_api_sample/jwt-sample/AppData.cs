@@ -7,6 +7,6 @@ namespace jwt_sample
 {
     public class AppData
     {
-    public static int ExpiresIn = 1;
+    public static int ExpiresIn = 2;
 }
 }
