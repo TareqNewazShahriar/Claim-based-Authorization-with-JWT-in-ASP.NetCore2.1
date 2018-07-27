@@ -12,6 +12,8 @@ namespace Jwt_Web_Client_Sample
 
         public const string TokenName = "token";
 
+        public const string LoginPath = @"/account/login";
+
         public static UserModel iModel = new UserModel();
     }
 }

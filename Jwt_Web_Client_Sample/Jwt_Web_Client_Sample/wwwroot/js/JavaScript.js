@@ -36,17 +36,17 @@ function ajax(url, data, successCallback, method = 'GET') {
         xhr.setRequestHeader('Authorization', 'Bearer ' + token);
 
     xhr.onload = successCallback || function defaultSuccessCallback(a, b) {
-        log('from api: ' + this.responseText);
+        log('from api: ' + this.responseText + ' || Status: ' + this.status);
     };
     xhr.onerror = function (a, b) {
-        log(this.statusText);
+        log('statusText: ' + this.statusText + ' || status: ' + this.status);
     }
 
     xhr.send(JSON.stringify(data));
 }
 
 function log(text) {
-    document.querySelector('#log').innerHTML = document.querySelector('#log').innerHTML + '\n' + text;
+    document.querySelector('#log').innerHTML = document.querySelector('#log').innerHTML + text + '\n';
     console.log(text);
 }
 

@@ -24,11 +24,12 @@ namespace jwt_sample.Controllers
         [HttpPost]
         public IActionResult GetAuthenticated([FromBody] UserModel model)
         {
-            if(string.IsNullOrEmpty(model.Username)==false && string.IsNullOrEmpty(model.Password) == false)
+            if(string.IsNullOrEmpty(model.Username)==false
+                && string.IsNullOrEmpty(model.Password) == false)
             {
                 string tokenStr = GenerateToken(model);
                 
-                return Ok(new { Token = tokenStr, ExpiresIn = 7 });
+                return Ok(new { Token = tokenStr, AppData.ExpiresIn });
             }
 
             return Unauthorized();
@@ -50,7 +51,7 @@ namespace jwt_sample.Controllers
             var tokenObj = new JwtSecurityToken(_config["Jwt:Issuer"],
               _config["Jwt:Issuer"],
               claims,
-              expires: DateTime.UtcNow.AddDays(7),
+              expires: DateTime.UtcNow.AddDays(AppData.ExpiresIn),
               signingCredentials: creds);
 
             var tokenStr = new JwtSecurityTokenHandler().WriteToken(tokenObj);

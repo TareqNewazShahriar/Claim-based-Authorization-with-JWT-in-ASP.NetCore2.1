@@ -50,12 +50,12 @@ namespace Jwt_Web_Client_Sample
             //.AddCookie(o=> o.Cookie = new CookieBuilder() { Path = "/", Expiration = TimeSpan.FromDays(1), SecurePolicy = CookieSecurePolicy.SameAsRequest, MaxAge = TimeSpan.FromDays(1) })
             //.AddCookie(options => { options.LoginPath = "/Account/Login"; options.LogoutPath = "/Account/Logout"; });
 
-            services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/LogIn");
+            services.ConfigureApplicationCookie(options => options.LoginPath = AppData.LoginPath);
             services
                 .AddAuthentication(o => o.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/Account/Login";
+                    options.LoginPath = AppData.LoginPath;
                     options.LogoutPath = "/Account/Logout";
                 });
 

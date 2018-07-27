@@ -27,7 +27,7 @@ namespace Jwt_Web_Client_Sample.Controllers
                 _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Request.Cookies[AppData.TokenName]}");
 
             var response = await _client.GetAsync(requestUrl);
-
+            
             object obj = null;
             if(typeof(TEntity) == typeof(string))
                 obj = (object) await response.Content.ReadAsStringAsync();
@@ -55,6 +55,13 @@ namespace Jwt_Web_Client_Sample.Controllers
             var contentData = new StringContent(stringData, Encoding.UTF8, _mediaType.MediaType);
 
             var response = await _client.PostAsync(requestUrl, contentData);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                Response.Redirect(AppData.LoginPath);
+                return default(TRESPONSE); // null
+            }
+
             TRESPONSE result = JsonConvert.DeserializeObject<TRESPONSE>(await response.Content.ReadAsStringAsync());
 
             return result;

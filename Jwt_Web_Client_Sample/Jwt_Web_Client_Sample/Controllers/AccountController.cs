@@ -40,17 +40,19 @@ namespace Jwt_Web_Client_Sample.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string val=null)
         {
-            var tokenObj = await PostAsync<TokenModel, UserModel>("account/GetAuthenticated", new UserModel() { Username = "a", Password = "a", Email = "asdf@sdf", Dob = DateTime.Parse("2010/01/01") });
+            var user = new UserModel() { Username = "a", Password = "a", Email = "asdf@sdf", Dob = DateTime.Parse("2010/01/01") };
+            var tokenObj = await PostAsync<TokenModel, UserModel>("account/GetAuthenticated", user);
             if (string.IsNullOrEmpty(tokenObj.Token) == false)
             {
-                Response.Cookies.Append("token", tokenObj.Token, new CookieOptions { Expires = DateTime.UtcNow.AddDays(tokenObj.ExpiresIn) });
+                Response.Cookies.Append("token", tokenObj.Token, new CookieOptions { Secure=true, Expires = DateTime.UtcNow.AddMinutes(tokenObj.ExpiresIn) });
                 HttpContext.Session.SetString(AppData.TokenName, tokenObj.Token);
 
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, "adsf@sdf.sdf"),
-                    new Claim(ClaimTypes.GivenName, "user.FullName"),
-                    new Claim(ClaimTypes.Role, "Administrator"),
+                    new Claim(ClaimTypes.Name, user.Username),
+                    new Claim(ClaimTypes.GivenName, user.Username),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.DateOfBirth, user.Dob.ToString())
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme, "dsf", "sdf");
