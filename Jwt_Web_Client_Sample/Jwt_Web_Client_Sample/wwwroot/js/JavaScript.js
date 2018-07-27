@@ -47,6 +47,7 @@ function ajax(url, data, successCallback, method = 'GET') {
 
 function log(text) {
     document.querySelector('#log').innerHTML = document.querySelector('#log').innerHTML + '\n' + text;
+    console.log(text);
 }
 
 function login() {

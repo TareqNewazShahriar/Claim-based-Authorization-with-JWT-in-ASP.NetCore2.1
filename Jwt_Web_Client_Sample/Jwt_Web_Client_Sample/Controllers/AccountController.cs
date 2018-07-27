@@ -32,7 +32,7 @@ namespace Jwt_Web_Client_Sample.Controllers
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            ViewBag.data = @"<form action='' method='post'><button type='submit'/>login</form>";
+            ViewBag.data = @"<form action='' method='post'><button type='submit'>login</button></form>";
             
             return View("_view");
         }

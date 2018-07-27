@@ -10,10 +10,11 @@ namespace jwt_sample.Controllers
     [Authorize]
     public class HomeController : ControllerBase
     {
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Index()
-        {   
-            return Content("index");
+        {
+            return Content("api index");
         }
 
 

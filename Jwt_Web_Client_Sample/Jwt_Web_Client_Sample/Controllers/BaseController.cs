@@ -28,14 +28,13 @@ namespace Jwt_Web_Client_Sample.Controllers
 
             var response = await _client.GetAsync(requestUrl);
 
-            TEntity result;
-
+            object obj = null;
             if(typeof(TEntity) == typeof(string))
-                result = (TEntity) await response.Content.ReadAsStringAsync();
+                obj = (object) await response.Content.ReadAsStringAsync();
             else
-                result = JsonConvert.DeserializeObject<TEntity>(await response.Content.ReadAsStringAsync());
+                obj = JsonConvert.DeserializeObject<TEntity>(await response.Content.ReadAsStringAsync());
 
-            return result;
+            return (TEntity)obj;
         }
 
         public async Task<TRESPONSE> PostAsync<TRESPONSE, TREQUEST>(string url, TREQUEST model, string email = null) where TREQUEST : class
