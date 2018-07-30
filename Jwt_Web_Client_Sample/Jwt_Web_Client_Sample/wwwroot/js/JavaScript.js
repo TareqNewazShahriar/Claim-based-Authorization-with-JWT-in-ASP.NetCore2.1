@@ -37,17 +37,16 @@ function ajax(url, data, successCallback, method = 'GET') {
 
     xhr.onload = successCallback || function defaultSuccessCallback(a, b) {
         log('from api: ' + this.responseText + ' || Status: ' + this.status);
+        if (this.status == 401) {
+            alert('Session ended.');
+            window.location.reload(true);
+        }
     };
     xhr.onerror = function (a, b) {
         log('statusText: ' + this.statusText + ' || status: ' + this.status);
     }
 
     xhr.send(JSON.stringify(data));
-}
-
-function log(text) {
-    document.querySelector('#log').innerHTML = document.querySelector('#log').innerHTML + text + '\n';
-    console.log(text);
 }
 
 function login() {
@@ -62,4 +61,12 @@ function login() {
     );
 
     return false;
+}
+
+function log(text) {
+    console.log(text);
+
+    let panel = document.querySelector('#log');
+    if (panel)
+        panel.innerHTML = panel.innerHTML + text + '\n';
 }

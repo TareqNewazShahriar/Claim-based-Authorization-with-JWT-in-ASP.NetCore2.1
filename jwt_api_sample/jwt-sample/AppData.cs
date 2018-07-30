@@ -7,6 +7,14 @@ namespace jwt_sample
 {
     public class AppData
     {
-    public static int ExpiresIn = 2;
-}
+        /// <summary>
+        /// For dev: in minutes // For Prod: in days
+        /// </summary>
+#if DEBUG
+        public static int ExpiresIn = 5;
+#else
+        public static int ExpiresIn = 7;
+#endif
+        
+    }
 }
