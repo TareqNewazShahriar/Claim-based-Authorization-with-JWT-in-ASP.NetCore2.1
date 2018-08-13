@@ -34,14 +34,14 @@ namespace jwt_sample
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = false,
-                        ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
                         ValidIssuer = Configuration["Jwt:Issuer"],
                         ValidAudience = Configuration["Jwt:Issuer"],
-                        ClockSkew = TimeSpan.Zero /* no buffer time after expiration of token */
+                        ClockSkew = TimeSpan.Zero, /* no buffer time after expiration of token. Default is 5 minutes. */
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = false,
+                        ValidateIssuerSigningKey = true
 
                         //,LifetimeValidator =
                         //    (DateTime? notBefore, DateTime? expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
@@ -80,7 +80,7 @@ namespace jwt_sample
             }
 
             app.UseHttpsRedirection();
-            app.UseAuthentication(); // must before UseMvc()
+            app.UseAuthentication(); // must be before UseMvc()
             app.UseMvc().UseMvcWithDefaultRoute();
         }
     }
