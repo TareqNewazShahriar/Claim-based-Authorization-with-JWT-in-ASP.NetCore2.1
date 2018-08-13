@@ -36,7 +36,7 @@ namespace Jwt_Web_Client_Sample
             services.AddMvc();
             services.AddSession();
 
-            services.AddDbContext<IdentityDbContext>(o => o.UseModel(AppData.iModel));
+            services.AddDbContext<IdentityDbContext>();
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
@@ -64,14 +64,14 @@ namespace Jwt_Web_Client_Sample
                 {   
                     o.AppId = Configuration.GetValue<string>("Facebook:AppId");
                     o.AppSecret = Configuration.GetValue<string>("Facebook:AppSecret");
-                    o.Events.OnRemoteFailure = AccountController.OnExternalLoginDenied;
+                    o.Events.OnRemoteFailure = AccountController.OnExternalLoginDenial;
                 });
             services.AddAuthentication()
                 .AddGoogle(o =>
                 {
                     o.ClientId = Configuration.GetValue<string>("Google:ClientId");
                     o.ClientSecret = Configuration.GetValue<string>("Google:ClientSecret");
-                    o.Events.OnRemoteFailure = AccountController.OnExternalLoginDenied;
+                    o.Events.OnRemoteFailure = AccountController.OnExternalLoginDenial;
                 });
 
             services.AddAuthentication()
@@ -79,7 +79,7 @@ namespace Jwt_Web_Client_Sample
                 {
                     o.ConsumerKey = Configuration.GetValue<string>("Twitter:ConsumerKey");
                     o.ConsumerSecret = Configuration.GetValue<string>("Twitter:ConsumerSecret");
-                    o.Events.OnRemoteFailure = AccountController.OnExternalLoginDenied;
+                    o.Events.OnRemoteFailure = AccountController.OnExternalLoginDenial;
                 });
         }
 

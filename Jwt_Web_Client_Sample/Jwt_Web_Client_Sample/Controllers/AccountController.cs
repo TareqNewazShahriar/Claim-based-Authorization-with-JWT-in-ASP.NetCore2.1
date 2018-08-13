@@ -40,7 +40,7 @@ namespace Jwt_Web_Client_Sample.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string val=null)
         {
-            var user = new UserModel() { Username = "a", Password = "a", Email = "asdf@sdf", Dob = DateTime.Parse("2010/01/01") };
+            var user = new UserModel() { Username = "a", Password = "a", Email = "asdf@sdf" /*, Dob = DateTime.Parse("2010/01/01")*/ };
             var tokenObj = await PostAsync<TokenModel, UserModel>("account/GetAuthenticated", user);
             if (string.IsNullOrEmpty(tokenObj.Token) == false)
             {
@@ -219,7 +219,8 @@ namespace Jwt_Web_Client_Sample.Controllers
             return View(nameof(ExternalLogin), model);
         }
 
-        public static Task OnExternalLoginDenied(RemoteFailureContext context)
+        // Event Handler
+        public static Task OnExternalLoginDenial(RemoteFailureContext context)
         {
             context.Response.Redirect("/account/login");
             context.HandleResponse();
