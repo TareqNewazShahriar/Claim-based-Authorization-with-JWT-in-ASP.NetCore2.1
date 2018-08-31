@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
     <title>Jwt</title>
+    <meta id="apiUrl" content="@Jwt_Web_Client_Sample.AppData.ApiUrl" />
     <style>
         body { 
             font-size: 1.2em;
@@ -15,11 +16,13 @@
     <a href="/">index</a> [ <a href="#" onclick="ajax('home/index')">js</a> ] |
     <a href="/home/authorized">authorized</a> [ <a href="#" onclick="ajax('home/AllUsers')">js</a> ] |
     <a href="/home/protected">Protected (dob only)</a> [ <a href="#" onclick="ajax('home/policyonly')">js</a> ] |
+    <a href="/home/GetAllBookingRequests">GetAllBookingRequests</a> [ <a href="#" onclick="ajax('bookingrequest/GetAll')">js</a> ] |
     <a href="/account/login">login</a> [<a href="#" onclick="login()">js</a>] |
     <a href="/account/externallogin?provider=Facebook&ReturnUrl=/">External (facebook)</a> |
     <a href="/account/externallogin?provider=Google&ReturnUrl=/">External (google)</a> |
     <a href="/account/externallogin?provider=Twitter&ReturnUrl=/">External (twitter)</a> |
-    <a href="/account/logout">logout</a>
+    <a href="/account/logout">logout</a> |
+    <a href="#">Ping</a> [ <a href="#" onclick="ajax('ping', undefined, undefined, undefined, false)">js</a> ] |
     <strong>
         [ logged-in: @ViewContext.HttpContext.User.Identity.IsAuthenticated ]
         [ Api token: @(string.IsNullOrEmpty(ViewContext.HttpContext.Session.GetString(Jwt_Web_Client_Sample.AppData.TokenName)) ? "empty" : "present") ]
@@ -30,6 +33,6 @@
     </div>
 
     @*<hr />
-    <pre id="log" style="background-color:black; color: silver; min-height: 100px; width:500px;"></pre>*@
+        <pre id="log" style="background-color:black; color: silver; min-height: 100px; width:500px;"></pre>*@
 </body>
 </html>

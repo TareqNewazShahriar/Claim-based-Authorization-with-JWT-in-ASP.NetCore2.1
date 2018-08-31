@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Jwt_Web_Client_Sample.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +36,16 @@ namespace Jwt_Web_Client_Sample.Controllers
             var x = await GetAsync<string>("home/policyonly");
 
             ViewBag.data = "from api: " + x;
+
+            return View("_view");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> GetAllBookingRequests()
+        {
+            var x = await GetAsync<List<BookingRequestGetAll>>("bookingRequest/getall");
+
+            ViewBag.data = JsonConvert.SerializeObject(x);
 
             return View("_view");
         }

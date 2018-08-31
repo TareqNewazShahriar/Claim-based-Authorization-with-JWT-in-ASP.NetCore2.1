@@ -8,7 +8,7 @@ namespace Jwt_Web_Client_Sample
 {
     public class AppData
     {
-        public static string ApiUrl = "https://localhost:44393/";
+        public static string ApiUrl = string.Empty;
 
         public const string TokenName = "token";
 

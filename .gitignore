@@ -2,3 +2,5 @@
 .vs
 obj
 bin
+/Jwt_Web_Client_Sample/Jwt_Web_Client_Sample/Properties/PublishProfiles
+*.user

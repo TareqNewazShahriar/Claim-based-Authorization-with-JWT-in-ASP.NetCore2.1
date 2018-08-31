@@ -1,4 +1,4 @@
-﻿const apiBaseUrl = 'https://localhost:44393/';
+﻿const apiBaseUrl = document.getElementById('apiUrl').getAttribute('content') + '/';
 
 function setCookie(c_name, value, exdays = 1)
 {
@@ -23,10 +23,10 @@ function getCookie(c_name)
 }
 
 
-function ajax(url, data, successCallback, method = 'GET') {
+function ajax(url, data, successCallback, method = 'GET', apiText = true) {
     var xhr = new XMLHttpRequest();
-
-    xhr.open(method, apiBaseUrl + url, true);
+    
+    xhr.open(method, apiBaseUrl + (apiText ? 'api/' :'') + url, true);
 
     if (method == 'POST')
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -34,6 +34,7 @@ function ajax(url, data, successCallback, method = 'GET') {
     var token = getCookie('token');
     if (token)
         xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
 
     xhr.onload = successCallback || function defaultSuccessCallback(a, b) {
         log('from api: ' + this.responseText + ' || Status: ' + this.status);
@@ -51,12 +52,9 @@ function ajax(url, data, successCallback, method = 'GET') {
 
 function login() {
 
-    ajax('/account/getauthenticated',
-        { username: 'aa', Password: 'aa', email: 'aa@aa' },
-        function (a, b) {
-            setCookie('token', this.responseText);
-            log('token acquired');
-        },
+    ajax('account/login',
+        { email: 'tariq.information@gmail.com', password: 'admin' },
+        null,
         'POST'
     );
 

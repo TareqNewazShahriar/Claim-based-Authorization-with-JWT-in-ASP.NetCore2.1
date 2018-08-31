@@ -81,6 +81,8 @@ namespace Jwt_Web_Client_Sample
                     o.ConsumerSecret = Configuration.GetValue<string>("Twitter:ConsumerSecret");
                     o.Events.OnRemoteFailure = AccountController.OnExternalLoginDenial;
                 });
+
+            AppData.ApiUrl = Configuration.GetValue<string>("apiUrl");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
